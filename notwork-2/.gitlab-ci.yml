@@ -1,0 +1,20 @@
+default:
+  image: gcc:9
+
+build:
+  stage: build
+  script:
+    - make
+
+lint:
+  stage: test
+  before_script:
+    - apt-get -qq update
+    - apt-get -qq install -y cppcheck
+  script:
+    - cppcheck --error-exitcode=2 *.c
+
+test:
+  stage: test
+  script:
+    - make test
